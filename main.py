@@ -326,7 +326,7 @@ def callback_query(call: object) -> None:
                     )
                     TempMailBot.send_message(
                         chat_id=cid,
-                        text="Note that attachments are not supported. You can use this mails for simple OTP verification, not link verification (if it's in attachment)",
+                        text="Note that attachments are not supported. You can use this mail for simple OTP verification, not link verification (if it's in attachment)",
                         disable_web_page_preview=True,
                     )
 
@@ -441,7 +441,13 @@ def callback_query(call: object) -> None:
             mail = call.data.split("_")[1]
 
             # Remove Email
-            os.remove(f"Accounts/{uid}/mails/{mail}")
+            try:
+                os.remove(f"Accounts/{uid}/mails/{mail}")
+            except FileNotFoundError:
+                # Send success message to user
+                TempMailBot.answer_callback_query(
+                    call.id, "You don't have this email!", show_alert=True
+                )
             
             # Send success message to user
             TempMailBot.answer_callback_query(
@@ -534,7 +540,10 @@ def callback_query(call: object) -> None:
             
             # Gets Email list in user account and delete all
             for mail in os.listdir(f"Accounts/{uid}/mails/"):
-                os.remove(f"Accounts/{uid}/mails/{mail}")
+                try:
+                    os.remove(f"Accounts/{uid}/mails/{mail}")
+                except FileNotFoundError:
+                    pass
             
             # Send success message to user
             TempMailBot.answer_callback_query(
