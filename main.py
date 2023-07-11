@@ -476,6 +476,11 @@ def callback_query(call: object) -> None:
                 "Operation Cancelled.", 
                 show_alert=True
             )
+            # Delete message
+            TempMailBot.delete_message(
+                chat_id=cid, 
+                message_id=mid
+            )
     
         except Exception as e:
             print(e) # Log
@@ -537,6 +542,12 @@ def callback_query(call: object) -> None:
                 "All Emails removed successfully.", 
                 show_alert=True
             )
+            # Delete message
+            TempMailBot.delete_message(
+                chat_id=cid, 
+                message_id=mid
+            )
+            
 
         except Exception as e:
             print(e) # Log
