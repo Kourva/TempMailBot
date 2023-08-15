@@ -6,11 +6,42 @@ import requests  # Make requests
 import json      # Json function
 import random    # Random functions
 import os        # OS functions
+import base64    # Base 64 tolls
+import re        # Regular Expression
 
 
 # Bot token to use
-Token = "Your Token here"
+Token = "Your Token"
 
+
+# Decode and format MIME mail
+def Decode_MIME(mime_message: str) -> str:
+    """
+    Decode base64-encoded parts from a MIME message and remove HTML tags.
+    
+    Args:
+        mime_message (str): The MIME message containing base64-encoded parts.
+
+    Returns:
+        str: The decoded and cleaned plain text content extracted from the MIME message.
+    """
+    
+    base64_parts = re.findall(
+        r'Content-Type: text/plain; charset=utf-8\r\nContent-Transfer-Encoding: base64\r\n\r\n(.*?)--', 
+        mime_message, 
+        re.DOTALL
+    )
+
+
+    # Decode base64 and remove HTML tags
+    decoded_parts = []
+    for part in base64_parts:
+        decoded_part = base64.b64decode(part).decode('utf-8', errors='ignore')
+        plain_text_part = re.sub(r'<.*?>', '', decoded_part)
+        decoded_parts.append(plain_text_part)
+
+    return "\n".join(decoded_parts)
+    
 
 # Escape markdown filter
 def escape_markdown(string: str) -> str:
@@ -92,7 +123,7 @@ def Smart_Random_String(length: int) -> str:
 
 
 # Generate Email address
-def Generate_Email(message: object) -> str:
+def Generate_Email(message: callable) -> str:
     """
     Function to generate temporary Email
 
@@ -180,7 +211,7 @@ def Generate_Email(message: object) -> str:
 
         # Return the final result
         return (
-            f"You Email Address is created and ready to use\.\nYou can request Inbox from Mail menu by pressing /mail\n\n"
+            f"You Email Address is created and ready to use\.\nYou can request Inbox from Mail menu by pressing /mail again\.\n\n"
             f"▋`{addrs}@{account_mail_name}`"
         )
 
@@ -194,8 +225,7 @@ def Load_Mail_Box(token: str) -> tuple:
     """
     Function to Load mailbox by given Token
 
-    Shows all messages from User Email's mailbox (In this
-       case, Attachment are not supported)
+    Shows all messages from User Email's mailbox (Attachment are now supported)
 
     Parameter:
         Token
@@ -239,9 +269,12 @@ def Load_Mail_Box(token: str) -> tuple:
 
                 # Fetch message and set Empty message if there is no message
                 try:
-                    message_intr = f"{message['intro']}"
+                    message_intr = Decode_MIME(requests.get(
+                        url=f"https://api.mail.tm{message['downloadUrl']}", headers=headers, timeout=10
+                    ).text)
                 except KeyError:
-                    message_intr = f"Message is Empty."
+                    message_intr = f"Message is Empty or could not get message."
+
 
                 # add result to result list
                 inboxes.append(message_from + message_subj + message_intr)
