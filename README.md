@@ -2,10 +2,14 @@
     <img align='left' src="https://github.com/Kourva/TempMailBot/assets/118578799/d2fe9f8c-89ca-436d-bf57-ffc2c67f772c" width=200 height=200/>
     <h2>TempMail Telegram Bot </h2>
   <p><b>Make unlimited emails just in minute with access to mailbox!</b></p>
-  <p><i>Usable only for <b>OTP</b> codes and messages, <b>not attachments</b>!</i></p>
+  <p><i>Usable for <b>Verification</b> codes and messages, <b>support MIME</b>!</i></p>
 </h1>
 
 <br><br>
+
+# ▋New Features
++ Support MIME messages (Link verification)
++ Added emoji to buttons.
 
 # ▋Features
 Bot creates account for every user joins the bot.
@@ -16,8 +20,8 @@ Bot creates account for every user joins the bot.
 + can **Show all inbox messages** in user email.
 + uses **Inline keyboard** instead of normal keyboard.
 
-each user can have up to **100** mails, be cause Telegram does't allow us to use more than **100** buttons in each message<br>
-Also note that you can access to attachments (like confirm links) from your mailbox. you can use this for simple **conversation** or **OTP verification**.
+each user can have up to **100** mails, because Telegram does't allow us to use more than **100** buttons in each message<br>
+Also note that now you can access to attachments (like confirm links) from your mailbox. you can use this for simple **conversation** or **OTP verification** and even **MIME messages**.
 
 <br>
 
