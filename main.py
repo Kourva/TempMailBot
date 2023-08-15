@@ -80,19 +80,19 @@ def mail_generator_handler(message: object) -> None:
         # reply markup
         Markups = quick_markup(
             {
-                "New Email": {
+                "📥 New Email": {
                     "callback_data": "NewEmail"
                 },
-                "Email List": {
+                "📬 Email List": {
                     "callback_data": "EmailList"
                 },
-                "Email Inbox": {
+                "📩 Email Inbox": {
                     "callback_data": "EMailBoxMenu"
                 },
-                "Delete Email": {
+                "📤 Delete Email": {
                     "callback_data": "DelEMailMenu"
                 },
-                "Close": {
+                "❌ Close": {
                     "callback_data": "Close"
                 },
             },
@@ -134,6 +134,12 @@ def callback_query(call: object) -> None:
 
         # Error handling
         try:
+        
+            # Answer query
+            TempMailBot.answer_callback_query(
+                call.id, 
+                "Please wait..."
+            )
 
             # Send Generating prompt to user
             new_mail_msg = TempMailBot.send_message(
@@ -152,18 +158,13 @@ def callback_query(call: object) -> None:
                 disable_web_page_preview=None,
             )
 
-            # Answer query
-            TempMailBot.answer_callback_query(
-                call.id, 
-                "Enjoy Safety Logins :)"
-            )
-
         except:
 
             # Show error message
             TempMailBot.answer_callback_query(
                 call.id,
-                "Could not generate email! try again :("
+                "❌ Could not generate email! try again :(",
+                show_alert=True
             )
 
     # Callback handler for Email list
@@ -181,12 +182,12 @@ def callback_query(call: object) -> None:
             # Make button for each Email
             for mail in mails:
                 keyboard.append(
-                    [types.InlineKeyboardButton(mail, callback_data=f"MailInfo_{mail}")],
+                    [types.InlineKeyboardButton(f"📧 {mail}", callback_data=f"MailInfo_{mail}")],
                 )
 
             # Add Close button
             keyboard.append(
-                [types.InlineKeyboardButton("Close", callback_data=f"Close")],
+                [types.InlineKeyboardButton("❌ Close", callback_data=f"Close")],
             )
             Markups = types.InlineKeyboardMarkup(keyboard)
 
@@ -260,10 +261,10 @@ def callback_query(call: object) -> None:
             mails = sorted(os.listdir(f"Accounts/{uid}/mails/"))
             for mail in mails:
                 keyboard.append(
-                    [types.InlineKeyboardButton(mail, callback_data=f"EMailBox_{mail}")],
+                    [types.InlineKeyboardButton(f"📧 {mail}", callback_data=f"EMailBox_{mail}")],
                 )
             keyboard.append(
-                [types.InlineKeyboardButton("Close", callback_data=f"Close")],
+                [types.InlineKeyboardButton("❌ Close", callback_data=f"Close")],
             )
             Markups = types.InlineKeyboardMarkup(keyboard)
 
@@ -326,7 +327,7 @@ def callback_query(call: object) -> None:
                     )
                     TempMailBot.send_message(
                         chat_id=cid,
-                        text="Note that attachments are not supported. You can use this mail for simple OTP verification, not link verification (if it's in attachment)",
+                        text="Note that attachments are now supported. You can use this mail for simple OTP verification, or link verification",
                         disable_web_page_preview=True,
                     )
 
@@ -363,12 +364,12 @@ def callback_query(call: object) -> None:
             # Make button for each Email and add Delete & Cancel options
             for mail in mails:
                 keyboard.append(
-                    [types.InlineKeyboardButton(mail, callback_data=f"DeleteMail_{mail}")],
+                    [types.InlineKeyboardButton(f"📧 {mail}", callback_data=f"DeleteMail_{mail}")],
                 )
             Markups = types.InlineKeyboardMarkup(keyboard)
             Markups.add(
-                (types.InlineKeyboardButton("Delete all", callback_data="DelAllMails")),
-                (types.InlineKeyboardButton("Close", callback_data="Close")),
+                (types.InlineKeyboardButton("⚠️ Delete all", callback_data="DelAllMails")),
+                (types.InlineKeyboardButton("❌ Close", callback_data="Close")),
                 row_width=2,
             )
 
@@ -405,8 +406,8 @@ def callback_query(call: object) -> None:
 
             # Generates confirmation buttons
             keyboard = [
-                [types.InlineKeyboardButton("Delete", callback_data=f"DeleteYes_{mail}")],
-                [types.InlineKeyboardButton("Cancel", callback_data=f"DeleteNo_{mail}")],
+                [types.InlineKeyboardButton("⚠️ Delete", callback_data=f"DeleteYes_{mail}")],
+                [types.InlineKeyboardButton("❌ Cancel", callback_data=f"DeleteNo_{mail}")],
             ]
             Markups = types.InlineKeyboardMarkup(keyboard)
 
@@ -506,8 +507,8 @@ def callback_query(call: object) -> None:
 
             # Make confirm buttons
             keyboard = [
-                [types.InlineKeyboardButton("Delete", callback_data=f"DeleteAll_Yes")],
-                [types.InlineKeyboardButton("Cancel", callback_data=f"DeleteNo_")],
+                [types.InlineKeyboardButton("⚠️ Delete", callback_data=f"DeleteAll_Yes")],
+                [types.InlineKeyboardButton("❌ Cancel", callback_data=f"DeleteNo_")],
             ]
             Markups = types.InlineKeyboardMarkup(keyboard)
 
