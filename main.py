@@ -3,8 +3,8 @@
 
 
 # TempMail telegram bot
-# Developed by Kourva
-# Source code: https://github.com/Kourva/TempMailBot
+# Developed by kozyol
+# Source code: https://github.com/kozyol/TempMailBot
 
 
 # Libraries
