@@ -1,5 +1,5 @@
 <h1 align="center">
-    <img align='left' src="https://github.com/Kourva/TempMailBot/assets/118578799/d2fe9f8c-89ca-436d-bf57-ffc2c67f772c" width=200 height=200/>
+    <img align='left' src="https://github.com/kozyol/TempMailBot/assets/118578799/d2fe9f8c-89ca-436d-bf57-ffc2c67f772c" width=200 height=200/>
     <h2>TempMail Telegram Bot </h2>
   <p><b>Make unlimited emails just in minute with access to mailbox!</b></p>
   <p><i>Usable for <b>Verification</b> codes and messages, <b>support MIME</b>!</i></p>
@@ -28,7 +28,7 @@ Also note that now you can access to attachments (like confirm links) from your 
 # ▋Clone Repository
 To get started, first you need to **clone** this repository from github into your machine:
 ```bash
-git clone https://github.com/Kourva/TempMailBot
+git clone https://github.com/kozyol/TempMailBot
 ```
 and if you dont have git you can install it from your package manager!
 
