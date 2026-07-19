@@ -121,13 +121,13 @@ def callback_query(call: object) -> None:
     
     # Initialize the IDs (User ID), (Chat ID), (Message ID)
     try:uid = call.from_user.id 
-    except:pass
-
+    except Exception:pass
+    
     try:cid = call.message.chat.id
-    except:pass
-
+    except Exception:pass
+    
     try:mid = call.message.message_id
-    except:pass
+    except Exception:pass
 
     # Callback handler for Email Generator
     if call.data == "NewEmail":
